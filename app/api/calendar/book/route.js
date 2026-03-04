@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getGoogleCalendar, CALENDAR_ID } from '@/app/lib/google-calendar';
+import { getGoogleCalendar, CALENDAR_ID } from '../../../lib/google-calendar';
 
 export async function POST(request) {
   try {
