@@ -91,13 +91,23 @@ export default function BookingPage() {
       const start = parseTime(selectedTime);
       const end = new Date(start.getTime() + duration * 60000);
 
+      // Format as local datetime string (not UTC)
+      const formatLocal = (d) => {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const hours = String(d.getHours()).padStart(2, '0');
+        const mins = String(d.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${mins}:00`;
+      };
+
       const res = await fetch('/api/calendar/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name, email, notes,
-          startTime: start.toISOString(),
-          endTime: end.toISOString(),
+          startTime: formatLocal(start),
+          endTime: formatLocal(end),
           duration
         })
       });
